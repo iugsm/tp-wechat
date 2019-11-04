@@ -44,7 +44,7 @@ tp-wechat
 ```
 
 ## 使用说明
-1. 请在 `database.php`中填写数据库相关配置
-2. 请在 `secure.php`中填写 JWT 相关配置
-3. 请在 `wechat.php`中填写微信相关配置
-4. 复杂业务建议抽象`service`层
+1. 请在 `database.php` 中填写数据库相关配置
+2. 请在 `secure.php` 中填写 JWT 相关配置
+3. 请在 `wechat.php` 中填写微信相关配置
+4. 复杂业务建议抽象 `service` 层

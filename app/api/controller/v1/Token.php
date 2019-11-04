@@ -21,14 +21,14 @@ class Token
     }
 
     public function verify() {
-        $token = Request::header('token');
-        if (!$token) {
-            throw new TokenException();
-        }
-
-        $valid = TokenService::verifyJWT($token);
+        $valid = TokenService::verifyJWT();
         return json([
             'is_valid' => $valid
         ]);
+    }
+
+    public function getId() {
+        $uid = TokenService::getUid();
+        return json($uid);
     }
 }

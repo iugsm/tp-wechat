@@ -4,6 +4,7 @@
 namespace app\api\service;
 
 
+use app\api\libs\exceptions\TokenException;
 use app\api\libs\exceptions\WeChatException;
 use app\api\model\User;
 use Lcobucci\JWT\Builder;
@@ -11,6 +12,7 @@ use Lcobucci\JWT\Parser;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Signer\Key;
 use think\facade\Config;
+use think\facade\Request;
 
 class Token
 {
@@ -73,11 +75,35 @@ class Token
         return (string) $token;
     }
 
-    public static function verifyJWT($token) {
-        $parse = (new Parser())->parse((string) $token);
+    public static function verifyJWT() {
         $signer = new Sha256();
+        $parse = self::check($signer);
         $res = $parse->verify($signer, Config::get('secure.JWT_KEY'));
         return $res;
+    }
+
+    private static function check($signer) {
+        $token = Request::header('token');
+
+        if (!$token) {
+            throw new TokenException();
+        }
+
+        $parse = (new Parser())->parse((string) $token);
+        return $parse;
+    }
+
+    public static function getUid() {
+        $signer = new Sha256();
+        $parse = self::check($signer);
+
+        $valid = $parse->verify($signer, Config::get('secure.JWT_KEY'));
+        if (!$valid) {
+            throw new TokenException(['msg' => 'token无效或已过期']);
+        }
+
+        $uid = $parse->getClaim('uid');
+        return $uid;
     }
 
 }
