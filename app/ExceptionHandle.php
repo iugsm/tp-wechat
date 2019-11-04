@@ -27,8 +27,7 @@ class ExceptionHandle extends Handle
         HttpResponseException::class,
         ModelNotFoundException::class,
         DataNotFoundException::class,
-        ValidateException::class,
-        BaseException::class
+        ValidateException::class
     ];
 
     /**
@@ -43,7 +42,7 @@ class ExceptionHandle extends Handle
         // 使用内置的方式记录异常日志
         $isDebug = Env::get('APP_DEBUG');
 
-        if (!$isDebug) {
+        if (!$isDebug && !$exception instanceof BaseException) {
             parent::report($exception);
         }
     }
