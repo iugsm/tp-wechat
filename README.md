@@ -1,52 +1,50 @@
-ThinkPHP 6.0
+TP-WeChat
 ===============
+
+## 基于 ThinkPHP 6 的微信小程序鉴权系统
 
 > 运行环境要求PHP7.1+。
 
-## 主要新特性
-
-* 采用`PHP7`强类型（严格模式）
-* 支持更多的`PSR`规范
-* 原生多应用支持
-* 更强大和易用的查询
-* 全新的事件系统
-* 模型事件和数据库事件统一纳入事件系统
-* 模板引擎分离出核心
-* 内部功能中间件化
-* SESSION/Cookie机制改进
-* 对Swoole以及协程支持改进
-* 对IDE更加友好
-* 统一和精简大量用法
 
 ## 安装
 
 ~~~
-composer create-project topthink/think tp 6.0.*-dev
+composer install
 ~~~
 
-如果需要更新框架使用
-~~~
-composer update topthink/framework
-~~~
+## 运行
 
-## 文档
+```
+php think run
+```
+
+## ThinkPHP 6 开发文档
 
 [完全开发手册](https://www.kancloud.cn/manual/thinkphp6_0/content)
 
-## 参与开发
+## 目录结构
+```
+tp-wechat
+├─ app                          应用目录
+│   ├─ api                      api 应用目录
+│   │   ├─ config               api 应用配置目录
+│   │   │    ├─ database.php    数据库配置文件（不建议提交到公开场合）
+│   │   │    ├─ secure.php      JWT 配置（不建议提交到公开场合）
+│   │   │    ├─ wechat.php      微信相关配置（不建议提交到公开场合）
+│   │   ├─ controller           控制器目录
+│   │   ├─ libs                 资源目录
+│   │   │   ├─ exceptions       异常目录
+│   │   ├─ model                模型目录
+│   │   ├─ route                路由目录
+│   │   ├─ service              service 目录
+│   │   ├─ validate             验证器目录
+│   ├─ ExceptionHandle.php      异常处理类
+├─ config                       全局配置目录
 
-请参阅 [ThinkPHP 核心框架包](https://github.com/top-think/framework)。
+```
 
-## 版权信息
-
-ThinkPHP遵循Apache2开源协议发布，并提供免费使用。
-
-本项目包含的第三方源码和二进制文件之版权信息另行标注。
-
-版权所有Copyright © 2006-2019 by ThinkPHP (http://thinkphp.cn)
-
-All rights reserved。
-
-ThinkPHP® 商标和著作权所有者为上海顶想信息科技有限公司。
-
-更多细节参阅 [LICENSE.txt](LICENSE.txt)
+## 使用说明
+1. 请在 `database.php`中填写数据库相关配置
+2. 请在 `secure.php`中填写 JWT 相关配置
+3. 请在 `wechat.php`中填写微信相关配置
+4. 复杂业务建议抽象`service`层

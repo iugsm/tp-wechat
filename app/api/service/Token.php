@@ -22,9 +22,9 @@ class Token
     function __construct($code)
     {
         $this->code = $code;
-        $this->appid = Config::get('WeChat.APPID');
-        $this->appsecret = Config::get('WeChat.APPSECRET');
-        $this->loginUrl = sprintf(Config::get('WeChat.LOGIN_URL'),
+        $this->appid = Config::get('wechat.APPID');
+        $this->appsecret = Config::get('wechat.APPSECRET');
+        $this->loginUrl = sprintf(Config::get('wechat.LOGIN_URL'),
             $this->appid, $this->appsecret, $this->code);
     }
 
@@ -63,10 +63,11 @@ class Token
 
     private function makeJWT($uid) {
         $signer = new Sha256();
-        $key = new Key(Config::get('Secure.JWT_KEY'));
+        $key = new Key(Config::get('secure.JWT_KEY'));
         $time = time();
+        $expires = Config::get('secure.JWT_EXPIRES') ? Config::get('secure.JWT_EXPIRES') : 3600;
         $token = (new Builder())->issuedAt($time)
-                                ->expiresAt($time + Config::get('Secure.JWT_EXPIRES'))
+                                ->expiresAt($time + $expires)
                                 ->withClaim('uid', $uid)
                                 ->getToken($signer, $key);
         return (string) $token;
@@ -75,7 +76,7 @@ class Token
     public static function verifyJWT($token) {
         $parse = (new Parser())->parse((string) $token);
         $signer = new Sha256();
-        $res = $parse->verify($signer, Config::get('Secure.JWT_KEY'));
+        $res = $parse->verify($signer, Config::get('secure.JWT_KEY'));
         return $res;
     }
 
