@@ -2,4 +2,5 @@
 
 use think\facade\Route;
 
-Route::get(':version/user', 'api/:version.User/index');
+Route::post(':version/token/get', 'api/:version.Token/get');
+Route::post(':version/token/verify', 'api/:version.Token/verify');
