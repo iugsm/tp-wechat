@@ -1,14 +1,17 @@
 <?php
 namespace app;
 
+use app\api\libs\exceptions\BaseException;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\ModelNotFoundException;
 use think\exception\Handle;
 use think\exception\HttpException;
 use think\exception\HttpResponseException;
 use think\exception\ValidateException;
+use think\facade\Env;
 use think\Response;
 use Throwable;
+use think\facade\Request as Req;
 
 /**
  * 应用异常处理类
@@ -25,6 +28,7 @@ class ExceptionHandle extends Handle
         ModelNotFoundException::class,
         DataNotFoundException::class,
         ValidateException::class,
+        BaseException::class
     ];
 
     /**
@@ -37,22 +41,48 @@ class ExceptionHandle extends Handle
     public function report(Throwable $exception): void
     {
         // 使用内置的方式记录异常日志
-        parent::report($exception);
+        $isDebug = Env::get('APP_DEBUG');
+
+        if (!$isDebug) {
+            parent::report($exception);
+        }
     }
 
     /**
-     * Render an exception into an HTTP response.
+     * Render an exceptions into an HTTP response.
      *
      * @access public
-     * @param \think\Request   $request
+     * @param \think\Request $request
      * @param Throwable $e
      * @return Response
      */
     public function render($request, Throwable $e): Response
     {
-        // 添加自定义异常处理机制
+        $reqUrl = Req::baseUrl();
+        $reqMethod = Req::method();
 
-        // 其他错误交给系统处理
-        return parent::render($request, $e);
+        $code = 200;
+
+        $data = [
+            'request' => $reqMethod . ' ' . $reqUrl
+        ];
+
+        if ($e instanceof BaseException) {
+            $data['msg'] = $e->msg;
+            $data['err_code'] = $e->errorCode;
+            $code = $e->code;
+        } else {
+            $data['msg'] = 'sorry, we make a mistake...';
+            $data['err_code'] = 999;
+            $code = 500;
+
+            $isDebug = Env::get('APP_DEBUG');
+
+            if ($isDebug) {
+                return parent::render($request, $e);
+            }
+        }
+
+        return json($data, $code);
     }
 }

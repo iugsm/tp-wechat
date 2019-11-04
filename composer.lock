@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "74a749574e0f40df27b0061a71e2b878",
+    "content-hash": "9ef3f6f1993fcd90da3b2fda07e08183",
     "packages": [
         {
             "name": "league/flysystem",
@@ -325,16 +325,16 @@
         },
         {
             "name": "psr/log",
-            "version": "1.1.0",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd"
+                "reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
-                "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/446d54b4cb6bf489fc9d75f55843658e6f25d801",
+                "reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -349,7 +349,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -374,7 +374,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2018-11-20T15:27:04+00:00"
+            "time": "2019-11-01T11:05:21+00:00"
         },
         {
             "name": "psr/simple-cache",
@@ -542,6 +542,56 @@
             ],
             "description": "The ThinkPHP6 Helper Package",
             "time": "2019-09-30T02:36:48+00:00"
+        },
+        {
+            "name": "topthink/think-multi-app",
+            "version": "v1.0.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/top-think/think-multi-app.git",
+                "reference": "215f4a6bb88e53ad41b448c61957336eb55ce6f9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/top-think/think-multi-app/zipball/215f4a6bb88e53ad41b448c61957336eb55ce6f9",
+                "reference": "215f4a6bb88e53ad41b448c61957336eb55ce6f9",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7.1.0",
+                "topthink/framework": "^6.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "think": {
+                    "services": [
+                        "think\\app\\Service"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "think\\app\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "liu21st",
+                    "email": "liu21st@gmail.com"
+                }
+            ],
+            "description": "thinkphp6 multi app support",
+            "time": "2019-10-29T06:34:59+00:00"
         },
         {
             "name": "topthink/think-orm",
@@ -724,16 +774,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v4.3.5",
+            "version": "v4.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "bde8957fc415fdc6964f33916a3755737744ff05"
+                "reference": "ea4940845535c85ff5c505e13b3205b0076d07bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/bde8957fc415fdc6964f33916a3755737744ff05",
-                "reference": "bde8957fc415fdc6964f33916a3755737744ff05",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/ea4940845535c85ff5c505e13b3205b0076d07bf",
+                "reference": "ea4940845535c85ff5c505e13b3205b0076d07bf",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -802,7 +852,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2019-10-04T19:48:13+00:00"
+            "time": "2019-10-13T12:02:04+00:00"
         },
         {
             "name": "topthink/think-trace",
