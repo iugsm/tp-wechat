@@ -1,12 +1,15 @@
 <?php
+
 namespace app;
 
 use app\api\libs\exceptions\BaseException;
+use app\api\libs\exceptions\NotFoundException;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\ModelNotFoundException;
 use think\exception\Handle;
 use think\exception\HttpException;
 use think\exception\HttpResponseException;
+use think\exception\RouteNotFoundException;
 use think\exception\ValidateException;
 use think\facade\Env;
 use think\Response;
@@ -34,7 +37,7 @@ class ExceptionHandle extends Handle
      * 记录异常信息（包括日志或者其它方式记录）
      *
      * @access public
-     * @param  Throwable $exception
+     * @param Throwable $exception
      * @return void
      */
     public function report(Throwable $exception): void
@@ -42,7 +45,7 @@ class ExceptionHandle extends Handle
         // 使用内置的方式记录异常日志
         $isDebug = Env::get('APP_DEBUG');
 
-        if (!$isDebug && !$exception instanceof BaseException) {
+        if ($isDebug != true && !$exception instanceof BaseException) {
             parent::report($exception);
         }
     }
@@ -54,13 +57,12 @@ class ExceptionHandle extends Handle
      * @param \think\Request $request
      * @param Throwable $e
      * @return Response
+     * @throws NotFoundException
      */
     public function render($request, Throwable $e): Response
     {
         $reqUrl = Req::baseUrl();
         $reqMethod = Req::method();
-
-        $code = 200;
 
         $data = [
             'request' => $reqMethod . ' ' . $reqUrl
@@ -70,6 +72,10 @@ class ExceptionHandle extends Handle
             $data['msg'] = $e->msg;
             $data['err_code'] = $e->errorCode;
             $code = $e->code;
+        } elseif ($e instanceof RouteNotFoundException) {
+            throw new NotFoundException([
+                'msg' => $e->getMessage()
+            ]);
         } else {
             $data['msg'] = 'sorry, we make a mistake...';
             $data['err_code'] = 999;
